@@ -69,8 +69,8 @@ export function postMessage({ name, text }) {
          * a message to the server
          */
         return api.postMessage({ name, text })
-            .then(() => dispatch(postMessageSuccess())
-                .catch((err) => dispatch(postMessageFailed(err))
+            .then(() => dispatch(postMessageSuccess()))
+                .catch((err) => dispatch(postMessageFailed(err)))
     };
 }
 
@@ -83,7 +83,7 @@ export function populateMessages() {
          * fetch all available messages from the server
          */
         return api.fetchMessages()
-            .then((messages) => dispatch(populateMessagesSuccess(messages))
-                .catch((err) => dispatch(populateMessagesFailed(err)));
+            .then((messages) => dispatch(populateMessagesSuccess(messages)))
+            .catch((err) => dispatch(populateMessagesFailed(err)));
     };
 }
