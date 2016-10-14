@@ -1,9 +1,10 @@
-const request = /* ??? */;
+const axios = require('axios');
 const React = require('react');
 const ReactDOM = require('react-dom');
 
 const AddChat = React.createClass({
   propTypes: {
+    url: React.PropTypes.string.isRequired
     /*
 
       1. Use proptypes to make sure that
@@ -14,6 +15,16 @@ const AddChat = React.createClass({
   },
 
   addChatMessage() {
+    const chatValue = this.refs.newChatInput.value;
+    const nameValue = this.refs.newNameInput.value;
+    console.log(chatValue);
+    axios.post('https://react-workshop-chat.herokuapp.com/chat', {
+      name: nameValue,
+      text: chatValue
+    })
+        .catch(function (error) {
+          console.log(error);
+        });
     /*
 
       2. Use ReactDOM.findDOMNode to get
@@ -35,6 +46,10 @@ const AddChat = React.createClass({
   },
 
   handleSubmit(e) {
+    if (e.key === 'Enter') {
+      console.log('Submitting to addChatMessage...');
+      this.addChatMessage();
+    }
     /*
 
       5. Handle when the user presses
@@ -56,10 +71,18 @@ const AddChat = React.createClass({
         */}
 
         <input
-          type="text"
-          placeholder="Compose Message"
-          ref="newChatInput"
-          className="form-control"
+            type="text"
+            placeholder="Your Name Here"
+            ref="newNameInput"
+            className="form-control"
+
+        />
+        <input
+            type="text"
+            placeholder="Compose Message"
+            ref="newChatInput"
+            className="form-control"
+            onKeyDown={this.handleSubmit}
         />
 
         {/*
